@@ -1,53 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".QuestionsFragment"
-    android:background="@android:color/transparent">
+    tools:context=".QuestionsFragment">
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi"
+        style="@style/AVLoadingIndicatorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        style="@style/AVLoadingIndicatorView"
-        app:indicatorName="LineScalePulseOutIndicator"
-        app:indicatorColor="@color/material_amber_900"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_gravity="center"
+        app:indicatorColor="@color/material_amber_900"
+        app:indicatorName="LineScalePulseOutIndicator" />
     <TextView
+        android:id="@+id/second_part"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
         android:text="second_part"
-        android:id="@+id/second_part"
         android:textColor="@color/material_blue_400"
         android:textSize="25sp"
         />
     <TextView
-        android:layout_width="wrap_content"
         android:id="@+id/votes"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="votes"
-        android:layout_alignParentEnd="false"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="false"
+        android:text="votes"
         android:textColor="@color/material_blue_400"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/push"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:text="Push" />
+
+    <Button
+        android:id="@+id/not_push"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:text="Not push" />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:id="@+id/first_part"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="first_part"
             android:textColor="@color/material_blue_400"
-            android:textSize="25sp"
-            android:id="@+id/first_part"/>
+            android:textSize="25sp" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="84dp"
+        android:text="Next" />
+
+    <Button
+        android:id="@+id/report"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/next"
+        android:layout_centerHorizontal="true"
+        android:text="Report" />
 
 
 </RelativeLayout>

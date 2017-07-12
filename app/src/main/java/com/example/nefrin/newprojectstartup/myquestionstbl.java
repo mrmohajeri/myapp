@@ -21,4 +21,12 @@ public class myquestionstbl extends SugarRecord {
         this.secondPart = second_part;
         this.key = key;
     }
+
+    public String getTitle() {
+        return firsPart;
+    }
+
+    public String getNote() {
+        return secondPart;
+    }
 }

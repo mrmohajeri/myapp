@@ -29,6 +29,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 AddQuestionFragment tab2 = new AddQuestionFragment();
                 return tab2;
+            case 2:
+                MyQuestionsFragment tab3 = new MyQuestionsFragment();
+                return tab3;
             default:
                 return null;
         }

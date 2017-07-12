@@ -1,5 +1,6 @@
 package com.example.nefrin.newprojectstartup;
 
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,20 +13,35 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.eftimoff.viewpagertransformers.TabletTransformer;
+import com.orm.SugarContext;
+import com.orm.SugarDb;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+    private static ViewPagerCustomDuration viewPager;
     private TabLayout tabLayout;
-    private ViewPagerCustomDuration viewPager;
+
+    public static void svp(int i) {
+        viewPager.setCurrentItem(i, false);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_main);
+        SugarDb db = new SugarDb(this);
+        db.onCreate(db.getDB());
+        SugarContext.init(getApplicationContext());
         viewPager = (ViewPagerCustomDuration) findViewById(R.id.viewpager);
-        viewPager.setScrollDurationFactor(5); // make the animation twice as slow
+        viewPager.setScrollDurationFactor(3); // make the animation twice as slow
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.addTab(tabLayout.newTab().setText("Questions"));
         tabLayout.addTab(tabLayout.newTab().setText("Ask"));
+        tabLayout.addTab(tabLayout.newTab().setText("My questions"));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
 
         });
@@ -33,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition(),false);
+
                 Log.i("TAG", "onTabSelected: " + tab.getPosition());
             }
             @Override
