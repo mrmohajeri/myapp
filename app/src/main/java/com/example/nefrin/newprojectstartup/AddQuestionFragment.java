@@ -74,6 +74,7 @@ public class AddQuestionFragment extends Fragment {
                                 QuestionsFragment.update_q(key);
                                 MainActivity.svp(0);
                                 MyQuestionsFragment.in(getActivity());
+                                MyQuestionsFragment.notifi();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
