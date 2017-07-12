@@ -2,10 +2,13 @@ package com.example.nefrin.newprojectstartup;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -15,6 +18,7 @@ import java.util.List;
 public class QuesionsAdapter extends RecyclerView.Adapter<QuesionsAdapter.NoteVH> {
     Context context;
     List<myquestionstbl> notes;
+    OnItemClickListener clickListener;
 
     public QuesionsAdapter(Context context, List<myquestionstbl> notes) {
         this.context = context;
@@ -36,11 +40,20 @@ public class QuesionsAdapter extends RecyclerView.Adapter<QuesionsAdapter.NoteVH
         holder.fp.setText(notes.get(position).getTitle());
         holder.sp.setText(notes.get(position).getNote());
 
+
     }
 
     @Override
     public int getItemCount() {
         return notes.size();
+    }
+
+    public void SetOnItemClickListener(final OnItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
     }
 
     class NoteVH extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -57,6 +70,7 @@ public class QuesionsAdapter extends RecyclerView.Adapter<QuesionsAdapter.NoteVH
 
         @Override
         public void onClick(View view) {
+            clickListener.onItemClick(view, getAdapterPosition());
 
         }
     }

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,7 @@ public class MyQuestionsFragment extends Fragment {
         List<myquestionstbl> q = myquestionstbl.listAll(myquestionstbl.class);
         recyclerView = (SuperRecyclerView) view.findViewById(R.id.q_rv);
         StaggeredGridLayoutManager gridLayoutManager =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
 
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -60,11 +61,26 @@ public class MyQuestionsFragment extends Fragment {
         }
     }
 
+    public static void notifi() {
+        adapter.notifyDataSetChanged();
+        recyclerView.invalidate();
+        adapter.notifyItemInserted(notes.size() + 1);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_my_questions, container, false);
         in(getActivity());
+        adapter.SetOnItemClickListener(new QuesionsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getActivity(), "item clicked " + String.valueOf(notes.get(position).getKey()), Toast.LENGTH_SHORT).show();
+                QuestionsFragment.showq(notes.get(position).getKey());
+                MainActivity.svp(0);
+
+            }
+        });
         return view;
     }
 

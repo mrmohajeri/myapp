@@ -84,6 +84,31 @@ public class QuestionsFragment extends Fragment {
 
     }
 
+    public static void showq(int id) {
+        RequestParams params = new RequestParams();
+        params.add("id", String.valueOf(id));
+        NetUtils.refresh("/app/refresh.php", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+                try {
+                    votes.setText("posetives: " + String.valueOf(response.getJSONObject(0).getInt("posetive")) + " negative: " + String.valueOf(response.getJSONObject(0).getInt("negative")));
+                    next.setEnabled(true);
+                    first_part.setText(response.getJSONObject(0).getString("first_part"));
+                    second_part.setText(response.getJSONObject(0).getString("second_part"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String responseString, Throwable throwable) {
+                Log.d("Failed: ", "" + statusCode);
+                Log.d("Error : ", "" + throwable);
+                Log.d("response : ", "" + responseString);
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_questions, container, false);
