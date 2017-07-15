@@ -46,7 +46,8 @@ public class QuesionsAdapter extends RecyclerView.Adapter<QuesionsAdapter.Questi
     }
 
     public void update(List<myquestionstbl> list) {
-        mDataset = list;
+        mDataset.clear();
+        mDataset.addAll(list);
         notifyDataSetChanged();
     }
 

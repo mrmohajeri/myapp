@@ -71,8 +71,9 @@ public class AddQuestionFragment extends Fragment {
                                 myquestionstbl myquestionstbl = new myquestionstbl(ftxt, stxt, key);
                                 myquestionstbl.save();
                                 Log.i("database ", String.valueOf(myquestionstbl.save()));
-                                QuestionsFragment.update_q(key);
+                                QuestionsFragment.showq(key);
                                 MainActivity.svp(0);
+                                MyQuestionsFragment.up();
 
                             } catch (Exception e) {
                                 e.printStackTrace();

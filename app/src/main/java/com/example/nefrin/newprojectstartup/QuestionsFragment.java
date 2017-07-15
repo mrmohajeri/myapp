@@ -92,7 +92,11 @@ public class QuestionsFragment extends Fragment {
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
                 try {
                     votes.setText("posetives: " + String.valueOf(response.getJSONObject(0).getInt("posetive")) + " negative: " + String.valueOf(response.getJSONObject(0).getInt("negative")));
-                    next.setEnabled(true);
+                    next.setEnabled(false);
+                    votes.setVisibility(View.VISIBLE);
+                    report.setEnabled(false);
+                    push.setEnabled(false);
+                    not_push.setEnabled(false);
                     first_part.setText(response.getJSONObject(0).getString("first_part"));
                     second_part.setText(response.getJSONObject(0).getString("second_part"));
                 } catch (JSONException e) {
@@ -136,10 +140,6 @@ public class QuestionsFragment extends Fragment {
             @Override
             public void onRefresh() {
                 loadQuestion();
-                first_part.setText("");
-                second_part.setText("");
-                votes.setText("");
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
         push.setOnClickListener(new View.OnClickListener() {
@@ -248,13 +248,15 @@ public class QuestionsFragment extends Fragment {
                     avLoadingIndicatorView.smoothToHide();
                 }
                 try {
-                    push.setEnabled(true);
-                    next.setVisibility(View.INVISIBLE);
-                    next.setEnabled(false);
-                    not_push.setEnabled(true);
-                    votes.setVisibility(View.INVISIBLE);
+
                     q_id_ = response.getJSONObject(0).getInt("ID");
+                    swipeRefreshLayout.setRefreshing(false);
                     if (q_id != q_id_) {
+                        push.setEnabled(true);
+                        next.setVisibility(View.INVISIBLE);
+                        next.setEnabled(false);
+                        not_push.setEnabled(true);
+                        votes.setVisibility(View.INVISIBLE);
                         first_part.setText(response.getJSONObject(0).getString("first_part"));
                         second_part.setText(response.getJSONObject(0).getString("second_part"));
                         votes.setText("posetives: " + String.valueOf(response.getJSONObject(0).getInt("posetive")) + " negative: " + String.valueOf(response.getJSONObject(0).getInt("negative")));

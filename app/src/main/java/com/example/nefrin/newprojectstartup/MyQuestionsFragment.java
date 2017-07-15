@@ -1,8 +1,10 @@
 package com.example.nefrin.newprojectstartup;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
+import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
 
 import java.util.List;
 
@@ -27,6 +30,10 @@ public class MyQuestionsFragment extends Fragment {
     public MyQuestionsFragment() {
     }
 
+    public static void up() {
+        adapter.update(myquestionstbl.listAll(myquestionstbl.class));
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -37,41 +44,18 @@ public class MyQuestionsFragment extends Fragment {
         recyclerView = (SuperRecyclerView) view.findViewById(R.id.q_rv);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-
-            GestureDetector gestureDetector = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
-
-                @Override
-                public boolean onSingleTapUp(MotionEvent motionEvent) {
-                    return true;
-                }
-
-            });
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                childview = rv.findChildViewUnder(e.getX(), e.getY());
-                int temp = (list.get(rvpos).key);
-                if (childview != null && gestureDetector.onTouchEvent(e)) {
-
-                    rvpos = rv.getChildAdapterPosition(childview);
-
-                    Toast.makeText(getActivity(), String.valueOf(list.get(rvpos).key), Toast.LENGTH_LONG).show();
-                    QuestionsFragment.showq(temp);
-                    MainActivity.svp(0);
-
-                }
-
-                return false;
+            public void onItemClick(View view, int position) {
+                int temp = list.get(position).key;
+                QuestionsFragment.showq(temp);
+                MainActivity.svp(0);
             }
-
+        }));
+        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
+            public void onRefresh() {
+                up();
             }
         });
         return view;
