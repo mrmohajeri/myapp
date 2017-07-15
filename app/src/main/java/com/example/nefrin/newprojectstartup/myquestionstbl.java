@@ -21,7 +21,7 @@ public class myquestionstbl extends SugarRecord {
         this.key = key;
     }
 
-    public String getTitle() {
+   /* public String getTitle() {
         return firsPart;
     }
 
@@ -32,5 +32,5 @@ public class myquestionstbl extends SugarRecord {
     public int getKey() {
         return key;
     }
-
+*/
 }

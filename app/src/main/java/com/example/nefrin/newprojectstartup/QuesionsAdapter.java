@@ -15,63 +15,60 @@ import java.util.List;
 /**
  * Created by Nefrin on 7/11/2017.
  */
-public class QuesionsAdapter extends RecyclerView.Adapter<QuesionsAdapter.NoteVH> {
+public class QuesionsAdapter extends RecyclerView.Adapter<QuesionsAdapter.QuestionHolder> {
     Context context;
-    List<myquestionstbl> notes;
-    OnItemClickListener clickListener;
+    List<myquestionstbl> mDataset;
 
-    public QuesionsAdapter(Context context, List<myquestionstbl> notes) {
+    public QuesionsAdapter(Context context, List<myquestionstbl> mDataset) {
         this.context = context;
-        this.notes = notes;
-
+        this.mDataset = mDataset;
     }
 
 
     @Override
-    public NoteVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_1, parent, false);
-        NoteVH viewHolder = new NoteVH(view);
-        return viewHolder;
+    public QuestionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.items_1, parent, false);
+        QuestionHolder dataObjectHolder = new QuestionHolder(view);
+        return dataObjectHolder;
     }
 
     @Override
-    public void onBindViewHolder(NoteVH holder, int position) {
+    public void onBindViewHolder(QuestionHolder holder, int position) {
+        holder.fpart.setText(mDataset.get(position).firsPart);
+        holder.spart.setText(mDataset.get(position).secondPart);
 
-        holder.fp.setText(notes.get(position).getTitle());
-        holder.sp.setText(notes.get(position).getNote());
+    }
 
+    public void addItem(myquestionstbl dataObj, int index) {
+        mDataset.add(dataObj);
+        notifyItemInserted(index);
+    }
 
+    public void update(List<myquestionstbl> list) {
+        mDataset = list;
+        notifyDataSetChanged();
+    }
+
+    public void deleteItem(int index) {
+        mDataset.remove(index);
+        notifyItemRemoved(index);
     }
 
     @Override
     public int getItemCount() {
-        return notes.size();
+        return mDataset.size();
     }
 
-    public void SetOnItemClickListener(final OnItemClickListener itemClickListener) {
-        this.clickListener = itemClickListener;
-    }
+    public static class QuestionHolder extends RecyclerView.ViewHolder {
 
-    public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
-    }
+        TextView fpart, spart;
 
-    class NoteVH extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView fp, sp;
-
-        public NoteVH(View itemView) {
+        public QuestionHolder(View itemView) {
             super(itemView);
-
-            fp = (TextView) itemView.findViewById(R.id.qfp);
-            sp = (TextView) itemView.findViewById(R.id.qsp);
-
-            itemView.setOnClickListener(this);
+            fpart = (TextView) itemView.findViewById(R.id.qfp);
+            spart = (TextView) itemView.findViewById(R.id.qsp);
         }
 
-        @Override
-        public void onClick(View view) {
-            clickListener.onItemClick(view, getAdapterPosition());
-
-        }
     }
 }

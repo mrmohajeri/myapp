@@ -73,8 +73,7 @@ public class AddQuestionFragment extends Fragment {
                                 Log.i("database ", String.valueOf(myquestionstbl.save()));
                                 QuestionsFragment.update_q(key);
                                 MainActivity.svp(0);
-                                MyQuestionsFragment.in(getActivity());
-                                MyQuestionsFragment.notifi();
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -85,6 +84,8 @@ public class AddQuestionFragment extends Fragment {
                             materialDialog.dismiss();
                             materialDialog.cancel();
                             Toast.makeText(getActivity(), "failed", Toast.LENGTH_SHORT).show();
+                            Log.d("Failed: ", "" + statusCode);
+                            Log.d("Error : ", "" + error);
 
                         }
                     });

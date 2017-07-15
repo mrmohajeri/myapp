@@ -13,7 +13,7 @@ import com.loopj.android.http.RequestParams;
  * Created by Nefrin on 6/25/2017.
  */
 public class NetUtils {
-    private static final String BASE_URL = "http://8ffeaca8.ngrok.io/";
+    private static final String BASE_URL = "http://192.168.8.9/";
     private static AsyncHttpClient client = new AsyncHttpClient();
     ProgressDialog progressDialog;
 
