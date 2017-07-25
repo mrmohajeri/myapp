@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.nefrin.newprojectstartup">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-sdk tools:overrideLibrary="co.ronash.pushe" />
+    <permission
+        android:name="com.example.nefrin.newprojectstartup.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.example.nefrin.newprojectstartup.permission.C2D_MESSAGE" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
+
+        <receiver android:name="co.ronash.pushe.receiver.UpdateReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+
+                <data
+                    android:path="com.example.nefrin.newprojectstartup"
+                    android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.example.nefrin.newprojectstartup" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="co.ronash.pushe.token"
+            android:value="PUSHE_229448831041" />
+        <meta-data
+            android:name="co.ronash.pushe.cr"
+            android:value="aHR0cDovL2QwZDcwNTVkNTM3MjQ0YjRiNTM0YmQyM2MxZDYyNzNmOjhjYTg4YzU0NzFlYzQwYjI5OWMxNjBmMTJlZDgwMDJkQGNhLnB1c2hlLmlyLzUyMA==" />
+
         <meta-data
             android:name="DATABASE"
             android:value="appDatabase.db" />
@@ -21,7 +62,8 @@
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.example.nefrin.newprojectstartup" />
-        <activity android:name=".MainActivity"/>
+
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".CheckInternet"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

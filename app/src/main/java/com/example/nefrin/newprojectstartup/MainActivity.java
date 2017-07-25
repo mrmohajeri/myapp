@@ -1,10 +1,9 @@
 package com.example.nefrin.newprojectstartup;
 
-import android.support.design.widget.Snackbar;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,8 +15,7 @@ import com.eftimoff.viewpagertransformers.TabletTransformer;
 import com.orm.SugarContext;
 import com.orm.SugarDb;
 
-import java.util.ArrayList;
-import java.util.List;
+import co.ronash.pushe.Pushe;
 
 public class MainActivity extends AppCompatActivity {
     private static ViewPagerCustomDuration viewPager;
@@ -37,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         db.onCreate(db.getDB());
         SugarContext.init(getApplicationContext());
         viewPager = (ViewPagerCustomDuration) findViewById(R.id.viewpager);
+        Pushe.initialize(this, false);
         viewPager.setScrollDurationFactor(3); // make the animation twice as slow
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.addTab(tabLayout.newTab().setText("Questions"));
